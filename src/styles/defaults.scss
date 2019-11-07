@@ -1,0 +1,13 @@
+@import '~normalize.css';
+
+@import 'vars/type';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: var(--type-family-body);
+  font-size: var(--type-size-regular);
+}
