@@ -4,7 +4,7 @@ import * as styles from './App.module.scss';
 
 const App: React.FC = () => {
   return (
-    <span className={styles.app}>Hello</span>
+    <span className={styles.app}>Hello <i>Okay</i></span>
   )
 };
 

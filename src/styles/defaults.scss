@@ -1,5 +1,6 @@
 @import '~normalize.css';
 
+@import 'vars/fonts';
 @import 'vars/type';
 
 * {
@@ -9,5 +10,12 @@
 html,
 body {
   font-family: var(--type-family-body);
+  font-weight: var(--type-weight-body);
   font-size: var(--type-size-regular);
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
 }
