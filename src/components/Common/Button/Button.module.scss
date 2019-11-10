@@ -1,3 +1,102 @@
+:root {
+  --button-background: var(--color-blue);
+  --button-hover-background: var(--color-light-blue);
+  --button-disabled-background: var(--color-grey-blue);
+
+  --button-foreground: white;
+  --button-hover-foreground: white;
+  --button-disabled-foreground: white;
+
+  --button-font-size: inherit;
+  --button-padding: 0;
+  --button-margin: calc(var(--size-padding-vertical) / 2) 0;
+  --button-border-radius: 0;
+
+  --button-icon-color: inherit;
+}
+
 .btn {
-  outline: none;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  border: 0;
+
+  background-color: var(--button-background);
+  color: var(--button-foreground);
+
+  padding: var(--button-padding);
+  margin: var(--button-margin);
+  font-size: var(--button-font-size);
+
+  border-radius: var(--button-border-radius);
+
+  outline: 0;
+
+  cursor: pointer;
+
+  &[disabled] {
+    background-color: var(--button-disabled-background);
+    color: var(--button-disabled-foreground);
+
+    cursor: default;
+  }
+
+  &:not([disabled]):hover,
+  &:not([disabled]):focus {
+    background-color: var(--button-hover-background);
+    color: var(--button-hover-foreground);
+  }
+}
+
+.bare {
+  --button-hover-background: transparent;
+  --button-hover-foreground: var(--color-grey-blue);
+
+  background-color: inherit;
+  color: inherit;
+}
+
+.inline {
+  display: inline-flex;
+
+  width: auto;
+}
+
+.icon {
+  color: var(--button-icon-color);
+  margin-right: calc(var(--size-padding-horizontal) * 0.25);
+}
+
+.small {
+  --button-font-size: var(--type-size-medium);
+  --button-padding: 6px 20px 8px;
+  --button-border-radius: var(--size-border-radius);
+
+  .icon {
+    margin-right: calc(var(--size-padding-horizontal) * 0.25);
+  }
+}
+
+.medium {
+  --button-font-size: var(--type-size-large);
+  --button-padding: 8px 30px 10px;
+  --button-border-radius: var(--size-border-radius);
+
+  .icon {
+    margin-right: calc(var(--size-padding-horizontal) * 0.5);
+  }
+}
+
+.large {
+  --button-font-size: var(--type-size-x-large);
+  --button-padding: 10px 40px 12px;
+  --button-border-radius: var(--size-border-radius);
+
+  .icon {
+    margin-right: calc(var(--size-padding-horizontal) * 0.5);
+  }
 }

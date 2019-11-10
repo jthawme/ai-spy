@@ -65,12 +65,24 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 8080,
-    stats: 'errors-only'
+    stats: 'errors-only',
+    hot: true
   },
 
   // Supported file loaders
   module: {
     rules: [
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
+      },
+      {
+        test: /\.(jpg|gif|png)$/,
+        loader: 'file-loader',
+        // options: {
+        //   name: 'images/[hash].[ext]'
+        // }
+      },
       {
         test: /\.tsx?$/,
         loader: 'ts-loader'

@@ -1,0 +1,18 @@
+:root {
+  --card-bg: white;
+}
+
+.card {
+  width: 100%;
+
+  padding: var(--size-padding-vertical) var(--size-padding-horizontal);
+}
+
+.content {
+  min-height: 100px;
+
+  padding: calc(var(--size-padding-vertical) * 2) var(--size-padding-horizontal);
+
+  background-color: var(--card-bg);
+  border-radius: var(--size-border-radius);
+}
