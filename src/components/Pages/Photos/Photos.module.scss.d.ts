@@ -5,6 +5,7 @@ interface CssExports {
   'photoRow': string;
   'tile': string;
   'tileInner': string;
+  'video': string;
 }
 declare const cssExports: CssExports;
 export = cssExports;

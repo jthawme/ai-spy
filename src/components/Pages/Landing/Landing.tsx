@@ -1,29 +1,35 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Card from '../../Common/Card/Card';
-import Button from '../../Common/Button/Button';
-import FlexRow from '../../Common/FlexRow/FlexRow';
-import FlexRowItem from '../../Common/FlexRow/FlexRowItem';
+import { useDispatch } from "react-redux";
 
-import * as styles from '../Pages.module.scss';
+import Card from "../../Common/Card/Card";
+import Button from "../../Common/Button/Button";
+import FlexRow from "../../Common/FlexRow/FlexRow";
+import FlexRowItem from "../../Common/FlexRow/FlexRowItem";
+
+import { setRoute } from "../../../store/router/actions";
+
+import * as styles from "../Pages.module.scss";
 
 const Landing: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const advance = () => dispatch(setRoute("photos"));
+
   return (
     <>
       <Card>
         <FlexRow className={styles.inner}>
-          <FlexRowItem>
-            High score: 0
-          </FlexRowItem>
-          <FlexRowItem align="right">
-            Welcome!
-          </FlexRowItem>
+          <FlexRowItem>High score: 0</FlexRowItem>
+          <FlexRowItem align="right">Welcome!</FlexRowItem>
         </FlexRow>
-        <Button>Play!</Button>
+        <Button onClick={advance}>Play!</Button>
       </Card>
-      <Button inline bare>Play what?</Button>
+      <Button inline bare>
+        Play what?
+      </Button>
     </>
-  )
-}
+  );
+};
 
 export default Landing;
