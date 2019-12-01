@@ -14,6 +14,8 @@ import Information from "../Information/Information";
 import Landing from "../Pages/Landing/Landing";
 import Photos from "../Pages/Photos/Photos";
 import Processing from "../Pages/Processing/Processing";
+import Game from "../Pages/Game/Game";
+import { Route, Switch } from "../Common/Router/Router";
 
 import { RootState } from "../../store/store";
 
@@ -30,13 +32,29 @@ const App: React.FC = () => {
 
   return (
     <main className={cls}>
-      <header className={styles.header}>
-        <Logo className={styles.logo} />
-      </header>
+      <Switch>
+        <Route path="game">
+          <header className={styles.header}>mofucking test</header>
+        </Route>
+        <Route path="*">
+          <header className={styles.header}>
+            <Logo className={styles.logo} />
+          </header>
+        </Route>
+      </Switch>
       <div className={styles.content}>
-        {currentRoute === "home" && <Landing />}
-        {currentRoute === "photos" && <Photos />}
-        {currentRoute === "processing" && <Processing />}
+        <Route path="home">
+          <Landing />
+        </Route>
+        <Route path="photos">
+          <Photos />
+        </Route>
+        <Route path="processing">
+          <Processing />
+        </Route>
+        <Route path="game">
+          <Game />
+        </Route>
       </div>
       <FlexRow className={styles.footer}>
         <FlexRowItem>
