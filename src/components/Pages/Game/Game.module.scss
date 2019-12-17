@@ -1,0 +1,40 @@
+.speech {
+  display: flex;
+
+  align-items: center;
+
+  flex-grow: 1;
+}
+
+.bar {
+  width: 100%;
+
+  padding: 0 var(--size-padding-horizontal);
+
+  text-align: right;
+
+  color: var(--color-red);
+
+  button {
+    --button-padding: calc(var(--size-padding-vertical) / 2);
+    --button-margin: 0;
+  }
+}
+
+.interactive {
+  flex-basis: auto;
+
+  --padding-content-bottom: 50px;
+  --padding-content-top: 10px;
+  --padding-top: 0;
+}
+
+.form {
+  padding: 15px 0;
+
+  input {
+    margin-bottom: 5px;
+
+    outline: none;
+  }
+}

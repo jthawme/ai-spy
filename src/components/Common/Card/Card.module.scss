@@ -1,18 +1,43 @@
 :root {
   --card-bg: white;
+
+  --padding-top: var(--size-padding-vertical);
+  --padding-bottom: var(--size-padding-vertical);
+  --padding-right: var(--size-padding-horizontal);
+  --padding-left: var(--size-padding-horizontal);
+
+  --padding-content-top: calc(var(--size-padding-vertical) * 2);
+  --padding-content-bottom: calc(var(--size-padding-vertical) * 2);
+  --padding-content-right: var(--size-padding-horizontal);
+  --padding-content-left: var(--size-padding-horizontal);
 }
 
 .card {
   width: 100%;
 
-  padding: var(--size-padding-vertical) var(--size-padding-horizontal);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+  padding-left: var(--padding-left);
+  padding-right: var(--padding-right);
 }
 
 .content {
   min-height: 100px;
+  height: 100%;
 
-  padding: calc(var(--size-padding-vertical) * 2) var(--size-padding-horizontal);
+  padding-top: var(--padding-content-top);
+  padding-bottom: var(--padding-content-bottom);
+  padding-left: var(--padding-content-left);
+  padding-right: var(--padding-content-right);
 
   background-color: var(--card-bg);
   border-radius: var(--size-border-radius);
+}
+
+.flat {
+  padding-bottom: 0;
+
+  .content {
+    border-radius: var(--size-border-radius) var(--size-border-radius) 0 0;
+  }
 }

@@ -1,7 +1,7 @@
 import { RouterState, RouterActionTypes, SET_ROUTE } from "./types";
 
 const initialState: RouterState = {
-  pathname: "home",
+  pathname: "game",
 };
 
 export function routerReducer(

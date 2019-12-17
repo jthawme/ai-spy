@@ -1,0 +1,31 @@
+.list {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+
+  border-bottom: 2px solid var(--color-grey);
+
+  li {
+    flex-grow: 1;
+    flex-shrink: 0;
+
+    color: var(--color-grey-blue);
+
+    &:nth-child(1):disabled {
+      color: var(--color-red);
+    }
+
+    &:nth-child(2):disabled {
+      color: var(--color-green);
+    }
+
+    &:nth-child(3):disabled {
+      color: var(--color-yellow);
+    }
+  }
+}

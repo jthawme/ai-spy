@@ -1,8 +1,8 @@
-import * as React from 'react';
-import classNames from 'classnames';
+import * as React from "react";
+import classNames from "classnames";
 
-import * as styles from './Button.module.scss';
-import Icon, { IconSize } from '../Icon/Icon';
+import * as styles from "./Button.module.scss";
+import Icon, { IconSize } from "../Icon/Icon";
 
 export type ButtonSize = "small" | "medium" | "large";
 
@@ -30,29 +30,41 @@ interface BtnProps {
 
   /** Attaching an onclick to the button */
   onClick?: (evt: React.MouseEvent) => void;
-};
+}
 
-const Button: React.FC<BtnProps> = ({ children, className, inline, onClick = () => {}, disabled, bare, icon, iconSize, size = "large" }) => {
-  const _sizeCls = bare ? '' : styles[size];
+const Button: React.FC<BtnProps> = ({
+  children,
+  className,
+  inline,
+  onClick = () => {},
+  disabled,
+  bare,
+  icon,
+  iconSize,
+  size = "large",
+}) => {
+  const _sizeCls = styles[size];
 
   const cls = classNames(
     styles.btn,
     {
-      [styles.inline]: inline
+      [styles.inline]: inline,
     },
     {
-      [styles.bare]: bare
+      [styles.bare]: bare,
     },
     _sizeCls,
     className
   );
 
   return (
-    <button className={ cls } onClick={ onClick } disabled={ !!(disabled) }>
-      { icon && <Icon className={ styles.icon } size={ iconSize || size } icon={ icon }/> }
-      { children && children }
+    <button className={cls} onClick={onClick} disabled={!!disabled}>
+      {icon && (
+        <Icon className={styles.icon} size={iconSize || size} icon={icon} />
+      )}
+      {children && children}
     </button>
-  )
+  );
 };
 
 export default Button;

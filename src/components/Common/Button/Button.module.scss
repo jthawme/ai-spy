@@ -72,12 +72,12 @@
 }
 
 .small {
-  --button-font-size: var(--type-size-medium);
+  --button-font-size: var(--type-size-small);
   --button-padding: 6px 20px 8px;
   --button-border-radius: var(--size-border-radius);
 
   .icon {
-    margin-right: calc(var(--size-padding-horizontal) * 0.25);
+    margin-right: calc(var(--size-padding-horizontal) * 0.5);
   }
 }
 
