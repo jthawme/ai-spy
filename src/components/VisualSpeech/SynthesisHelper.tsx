@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import SPEECHER from "./SpeechCategories";
+
 interface SynthesisHelperProps {
   onGetVoice: (voice: false | SpeechSynthesisVoice) => void;
 }
@@ -37,4 +39,5 @@ const SynthesisHelper: React.FC<SynthesisHelperProps> = ({ onGetVoice }) => {
   return null;
 };
 
+export { SPEECHER };
 export default SynthesisHelper;

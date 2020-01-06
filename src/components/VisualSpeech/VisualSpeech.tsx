@@ -9,6 +9,7 @@ interface VisualSpeechProps {
   text: string;
   voice: false | SpeechSynthesisVoice;
   muted: boolean;
+  onEnd: () => void;
 }
 
 function shouldAddHighlight(
@@ -21,9 +22,14 @@ function shouldAddHighlight(
     : undefined;
 }
 
-function getUtterance(text: string, voice: SpeechSynthesisVoice) {
+function getUtterance(
+  text: string,
+  voice: SpeechSynthesisVoice,
+  onEnd: () => void
+) {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.voice = voice;
+  utterance.onend = onEnd;
 
   return utterance;
 }
@@ -47,15 +53,27 @@ const config: SpringConfig = {
   friction: 20,
 };
 
-const VisualSpeech: React.FC<VisualSpeechProps> = ({ text, muted, voice }) => {
+const VisualSpeech: React.FC<VisualSpeechProps> = ({
+  text,
+  muted,
+  voice,
+  onEnd,
+}) => {
   const [words, setWords] = useState<string[]>([]);
+  let timer: ReturnType<typeof setTimeout>;
 
   useEffect(() => {
-    setWords(text.split(" "));
+    const _words = text.split(" ");
+    setWords(_words);
+    clearTimeout(timer);
 
-    if (!muted && voice) {
-      speechSynthesis.cancel();
-      speechSynthesis.speak(getUtterance(text, voice));
+    if (text) {
+      if (!muted && voice) {
+        speechSynthesis.cancel();
+        speechSynthesis.speak(getUtterance(text, voice, onEnd));
+      } else {
+        timer = setTimeout(() => onEnd(), _words.length * 250);
+      }
     }
   }, [text, muted]);
 

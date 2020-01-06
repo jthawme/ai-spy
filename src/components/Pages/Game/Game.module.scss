@@ -7,6 +7,10 @@
 }
 
 .bar {
+  position: relative;
+
+  z-index: 1;
+
   width: 100%;
 
   padding: 0 var(--size-padding-horizontal);
@@ -21,7 +25,19 @@
   }
 }
 
+.thumbs {
+  position: absolute;
+
+  right: calc(var(--size-padding-horizontal) + var(--size-border-radius));
+  left: calc(var(--size-padding-horizontal) + var(--size-border-radius));
+  bottom: var(--size-padding-vertical);
+}
+
 .interactive {
+  position: relative;
+
+  z-index: 2;
+
   flex-basis: auto;
 
   --padding-content-bottom: 50px;

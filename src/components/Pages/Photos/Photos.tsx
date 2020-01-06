@@ -13,7 +13,7 @@ import * as styles from "./Photos.module.scss";
 import { useDispatch } from "react-redux";
 import { setRoute } from "../../../store/router/actions";
 import { MAX_IMAGES } from "../../../constants";
-import { addLabels, addImages } from "../../../store/game/actions";
+import { addImages } from "../../../store/game/actions";
 
 const Photos: React.FC = () => {
   const dispatch = useDispatch();

@@ -1,27 +1,55 @@
-import React from "react";
-// import { useSelector } from "react-redux";
+import React, { Dispatch } from "react";
+
+import { connect, DispatchProp } from "react-redux";
 
 import Hints from "../../Hints/Hints";
 import VisualSpeech from "../../VisualSpeech/VisualSpeech";
-import SynthesisHelper from "../../VisualSpeech/SynthesisHelper";
+import SynthesisHelper, { SPEECHER } from "../../VisualSpeech/SynthesisHelper";
 import AnswerInput from "../../AnswerInput/AnswerInput";
+import AnswerResolver from "../../AnswerResolver/AnswerResolver";
 
 import Card from "../../Common/Card/Card";
 import Button from "../../Common/Button/Button";
+import ImageThumbs from "../../Common/ImageThumbs/ImageThumbs";
 
-// import { RootState } from "../../../store/store";
+import { RootState } from "../../../store/store";
 
-// import * as styles from '../Pages.module.scss';
 import * as styles from "./Game.module.scss";
+import Redirect from "../../Common/Router/Redirect";
 
-interface GameProps {}
+enum GAME_STATUSES {
+  IDLE,
+  GUESSING,
+  SUCCESS,
+  ADVANCE,
+}
+
+interface GameProps {
+  images: string[];
+  labels: string[][];
+}
 
 interface GameState {
   guessing: boolean;
   muted: boolean;
   voiceEnabled: false | SpeechSynthesisVoice;
-  testText: any;
+  speechText: string;
+  selectedImage: number;
+  questionIndex: number;
+  totalQuestions: number;
+  currentAnswer: string | undefined;
+  gameStatus: GAME_STATUSES;
 }
+
+const GAME_STATUS = {
+  IDLE: 0,
+  GUESSING: 1,
+  SUCCESS: 2,
+  ADVANCE: 3,
+};
+
+const prepareWord = (word: string | undefined) =>
+  word && word.trim().toLowerCase();
 
 class Game extends React.Component<GameProps, GameState> {
   constructor(props: GameProps) {
@@ -31,7 +59,12 @@ class Game extends React.Component<GameProps, GameState> {
       guessing: false,
       muted: true,
       voiceEnabled: false,
-      testText: "I spy, with my little eye, something beginning with, J",
+      speechText: "",
+      selectedImage: -1,
+      questionIndex: 0,
+      totalQuestions: -1,
+      currentAnswer: undefined,
+      gameStatus: GAME_STATUS.IDLE,
     };
   }
 
@@ -39,14 +72,17 @@ class Game extends React.Component<GameProps, GameState> {
     evt.preventDefault();
 
     if (evt.target instanceof HTMLFormElement) {
-      const { answer } = Object.fromEntries(new FormData(evt.target).entries());
+      const formEntries = Object.fromEntries(
+        new FormData(evt.target).entries()
+      );
+      const answer: string = formEntries.answer.toString();
 
-      this.setState({ testText: answer });
+      this.guess(answer);
     }
   };
 
   shouldInputsDisable() {
-    return this.state.guessing;
+    return this.state.gameStatus !== GAME_STATUS.IDLE;
   }
 
   setVoice = (voice: false | SpeechSynthesisVoice) => {
@@ -57,16 +93,112 @@ class Game extends React.Component<GameProps, GameState> {
     this.setState({ muted: !this.state.muted });
   };
 
+  setSelectedImage = (selectedImage: number) => {
+    if (selectedImage === this.state.selectedImage) {
+      this.setState({
+        selectedImage: -1,
+      });
+    } else {
+      this.setState({ selectedImage });
+    }
+  };
+
+  onTotal = (totalQuestions: number) => {
+    this.setState({ totalQuestions });
+  };
+
+  onResolvedAnswer = (currentAnswer: string) => {
+    this.setState({
+      currentAnswer,
+      speechText: SPEECHER.INTRO(currentAnswer),
+      gameStatus: GAME_STATUS.IDLE,
+    });
+  };
+
+  guess = (answer: string) => {
+    if (prepareWord(answer) === prepareWord(this.state.currentAnswer)) {
+      this.setState({
+        gameStatus: GAME_STATUS.SUCCESS,
+        speechText: SPEECHER.SUCCESS(),
+      });
+
+      return;
+    }
+
+    this.setState({
+      gameStatus: GAME_STATUS.GUESSING,
+      speechText: SPEECHER.INCORRECT(),
+    });
+
+    return;
+  };
+
+  onSpeechEnd = () => {
+    if (this.state.gameStatus === GAME_STATUS.GUESSING) {
+      this.setState({
+        gameStatus: GAME_STATUS.IDLE,
+        speechText: SPEECHER.IDLE(),
+      });
+      return;
+    }
+
+    if (this.state.gameStatus === GAME_STATUS.SUCCESS) {
+      if (this.state.questionIndex >= this.state.totalQuestions) {
+        this.setState({
+          gameStatus: GAME_STATUS.ADVANCE,
+        });
+      } else {
+        setTimeout(() => {
+          this.setState({
+            questionIndex: this.state.questionIndex + 1,
+          });
+        }, 500);
+      }
+      return;
+    }
+  };
+
   render() {
-    const { muted, voiceEnabled, testText } = this.state;
+    const {
+      muted,
+      voiceEnabled,
+      speechText,
+      selectedImage,
+      questionIndex,
+      currentAnswer,
+      gameStatus,
+    } = this.state;
+    const { images, labels } = this.props;
+
+    if (gameStatus === GAME_STATUS.ADVANCE) {
+      return <Redirect path="success" />;
+    }
 
     return (
       <>
+        <AnswerResolver
+          question={questionIndex}
+          labels={labels}
+          onTotal={this.onTotal}
+          onAnswer={this.onResolvedAnswer}
+        />
         <SynthesisHelper onGetVoice={this.setVoice} />
         <div className={styles.speech}>
-          <VisualSpeech text={testText} voice={voiceEnabled} muted={muted} />
+          <VisualSpeech
+            text={speechText}
+            voice={voiceEnabled}
+            muted={muted}
+            onEnd={this.onSpeechEnd}
+          />
         </div>
         <div className={styles.bar}>
+          <ImageThumbs
+            className={styles.thumbs}
+            images={images}
+            selected={selectedImage}
+            onSelect={this.setSelectedImage}
+          />
+
           {voiceEnabled && (
             <Button
               icon={muted ? "volume-x" : "volume"}
@@ -81,7 +213,11 @@ class Game extends React.Component<GameProps, GameState> {
           <Hints />
 
           <form className={styles.form} onSubmit={this.onSubmit}>
-            <AnswerInput disabled={this.shouldInputsDisable()} />
+            <AnswerInput
+              disabled={this.shouldInputsDisable()}
+              label={currentAnswer}
+              shouldFocus={gameStatus === GAME_STATUS.IDLE}
+            />
             <Button disabled={this.shouldInputsDisable()}>Guess</Button>
           </form>
         </Card>
@@ -90,4 +226,9 @@ class Game extends React.Component<GameProps, GameState> {
   }
 }
 
-export default Game;
+const mapStateToProps = (store: RootState) => ({
+  images: store.game.images,
+  labels: store.game.labels,
+});
+
+export default connect(mapStateToProps)(Game);

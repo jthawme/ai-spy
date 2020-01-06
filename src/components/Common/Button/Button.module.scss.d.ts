@@ -4,6 +4,7 @@ interface CssExports {
   'bare': string;
   'btn': string;
   'icon': string;
+  'iconOnly': string;
   'inline': string;
   'large': string;
   'medium': string;

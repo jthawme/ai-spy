@@ -15,5 +15,5 @@ export type GameActionTypes = AddImagesAction | AddLabelsAction;
 
 export interface GameState {
   images: string[];
-  labels: Array<string[]>;
+  labels: string[][];
 }

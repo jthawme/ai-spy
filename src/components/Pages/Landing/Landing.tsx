@@ -25,7 +25,7 @@ const Landing: React.FC = () => {
         </FlexRow>
         <Button onClick={advance}>Play!</Button>
       </Card>
-      <Button inline bare>
+      <Button inline bare size="small">
         Play what?
       </Button>
     </>

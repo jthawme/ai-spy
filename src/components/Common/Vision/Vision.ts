@@ -8,6 +8,13 @@ export const TEST_LABELS = [
   ["Road", "Street", "Town", "Neighbourhood", "Lane"],
 ];
 
+export const TEST_IMAGES = [
+  require("!!url-loader!./data/01.jpg"),
+  require("!!url-loader!./data/02.jpg"),
+  require("!!url-loader!./data/03.jpg"),
+  require("!!url-loader!./data/04.jpg"),
+];
+
 type ImageRequest = {
   image: {
     content: string;

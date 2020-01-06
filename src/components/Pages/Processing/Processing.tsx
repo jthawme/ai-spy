@@ -10,13 +10,6 @@ import { RootState } from "../../../store/store";
 
 // import * as styles from '../Pages.module.scss';
 
-// const testImages = [
-//   require("!!url-loader!../../Common/Vision/data/01.jpg"),
-//   require("!!url-loader!../../Common/Vision/data/02.jpg"),
-//   require("!!url-loader!../../Common/Vision/data/03.jpg"),
-//   require("!!url-loader!../../Common/Vision/data/04.jpg"),
-// ];
-
 const Processing: React.FC = () => {
   const dispatch = useDispatch();
   const images: string[] = useSelector((state: RootState) => state.game.images);

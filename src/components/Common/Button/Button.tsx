@@ -43,8 +43,6 @@ const Button: React.FC<BtnProps> = ({
   iconSize,
   size = "large",
 }) => {
-  const _sizeCls = styles[size];
-
   const cls = classNames(
     styles.btn,
     {
@@ -53,7 +51,10 @@ const Button: React.FC<BtnProps> = ({
     {
       [styles.bare]: bare,
     },
-    _sizeCls,
+    {
+      [styles.iconOnly]: !children && icon,
+    },
+    styles[size],
     className
   );
 

@@ -100,3 +100,21 @@
     margin-right: calc(var(--size-padding-horizontal) * 0.5);
   }
 }
+
+.iconOnly {
+  &.small {
+    --button-padding: 6px;
+  }
+
+  &.medium {
+    --button-padding: 8px;
+  }
+
+  &.large {
+    --button-padding: 10px;
+  }
+
+  .icon {
+    margin-right: 0;
+  }
+}
