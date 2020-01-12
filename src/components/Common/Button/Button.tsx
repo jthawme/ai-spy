@@ -45,6 +45,7 @@ const Button: React.FC<BtnProps> = ({
 }) => {
   const cls = classNames(
     styles.btn,
+    styles[size],
     {
       [styles.inline]: inline,
     },
@@ -54,7 +55,6 @@ const Button: React.FC<BtnProps> = ({
     {
       [styles.iconOnly]: !children && icon,
     },
-    styles[size],
     className
   );
 

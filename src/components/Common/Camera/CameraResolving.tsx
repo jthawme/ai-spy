@@ -1,15 +1,20 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Card from '../Card/Card';
+import Card from "../Card/Card";
+import Message from "../Message/Message";
 
-import * as styles from './Camera.module.scss';
+import * as styles from "./Camera.module.scss";
 
 const CameraResolving: React.FC = () => {
   return (
     <Card>
-      <p className={styles.text}>Requesting access to webcam</p>
+      <Message
+        className={styles.message}
+        icon="camera"
+        text="Requesting webcam"
+      />
     </Card>
-  )
+  );
 };
 
 export default CameraResolving;

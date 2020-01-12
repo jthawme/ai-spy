@@ -108,6 +108,7 @@ class Game extends React.Component<GameProps, GameState> {
   };
 
   onResolvedAnswer = (currentAnswer: string) => {
+    console.log("Current answer", currentAnswer);
     this.setState({
       currentAnswer,
       speechText: SPEECHER.INTRO(currentAnswer),
@@ -143,7 +144,7 @@ class Game extends React.Component<GameProps, GameState> {
     }
 
     if (this.state.gameStatus === GAME_STATUS.SUCCESS) {
-      if (this.state.questionIndex >= this.state.totalQuestions) {
+      if (this.state.questionIndex >= this.state.totalQuestions - 1) {
         this.setState({
           gameStatus: GAME_STATUS.ADVANCE,
         });

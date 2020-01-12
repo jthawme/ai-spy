@@ -24,6 +24,7 @@ export function gameReducer(
         images: action.payload,
       };
     case ADD_LABELS:
+      console.log("should add labels", action.payload);
       return {
         ...state,
         labels: action.payload,
