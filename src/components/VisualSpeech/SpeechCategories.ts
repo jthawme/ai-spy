@@ -5,7 +5,10 @@ const CATEGORIES = {
   INTRO: (word: string) =>
     `I Spy, with my little eye, something beginning with, ${word.charAt(0)}`,
   SUCCESS: () => {
-    return randomSentence(["You got it! Good guessing", "A-ha! That was it"]);
+    return randomSentence([
+      "You got it! Good guessing",
+      "Good one! That was it",
+    ]);
   },
   INCORRECT: () => {
     return randomSentence([

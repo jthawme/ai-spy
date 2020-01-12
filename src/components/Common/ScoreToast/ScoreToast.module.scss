@@ -1,0 +1,28 @@
+:root {
+  --toast-color: var(--color-red);
+  --toast-bottom: calc(100% + var(--size-padding-vertical));
+}
+
+.wrapper {
+  position: relative;
+}
+
+.toast {
+  position: absolute;
+
+  bottom: var(--toast-bottom);
+  left: 50%;
+
+  transform: translate3d(-50%, 0, 0);
+
+  color: var(--toast-color);
+  border: 2px solid var(--toast-color);
+
+  padding: 0px 6px;
+
+  border-radius: 14px;
+
+  text-align: center;
+
+  font-size: var(--type-size-small);
+}

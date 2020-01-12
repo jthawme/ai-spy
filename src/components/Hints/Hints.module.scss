@@ -14,18 +14,26 @@
     flex-grow: 1;
     flex-shrink: 0;
 
+    text-align: center;
+
     color: var(--color-grey-blue);
 
-    &:nth-child(1):disabled {
+    &:nth-child(1) .btn:disabled {
       color: var(--color-red);
     }
 
-    &:nth-child(2):disabled {
+    &:nth-child(2) .btn:disabled {
       color: var(--color-green);
     }
 
-    &:nth-child(3):disabled {
+    &:nth-child(3) .btn:disabled {
       color: var(--color-yellow);
     }
   }
+}
+
+.btn {
+  --button-disabled-background: transparent;
+
+  padding: var(--size-padding-vertical) 0;
 }

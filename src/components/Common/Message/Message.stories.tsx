@@ -2,7 +2,7 @@ import * as React from "react";
 // import { action } from '@storybook/addon-actions';
 
 // import Icon from './Icon';
-import Message from "../Message/Message";
+import Message from "./Message";
 
 export default {
   title: "Message",
