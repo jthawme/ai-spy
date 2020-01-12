@@ -14,16 +14,6 @@
 
   grid-auto-columns: 1fr;
   grid-gap: var(--size-padding-horizontal);
-
-  &.hasHighlighted .image {
-    opacity: 0.5;
-    transform: translate3d(0, var(--image-hidden-height), 0);
-
-    &.highlighted {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-  }
 }
 
 .image {
@@ -47,7 +37,7 @@
   transition: {
     duration: 0.15s;
     timing-function: var(--timing-function);
-    property: transform, opacity;
+    property: opacity;
   }
 
   &:not([disabled]) {
@@ -71,10 +61,64 @@
 
   &:hover,
   &:focus {
-    transform: translate3d(0, var(--image-peek-height), 0);
+    opacity: 0.5;
   }
+}
 
-  &.selected {
-    transform: translate3d(0, 0, 0);
+.modal {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  outline: 0;
+}
+
+.overlay {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: transparent;
+
+  z-index: 100;
+}
+
+.modalContent {
+  position: relative;
+
+  height: 100%;
+
+  background-color: var(--color-grey-blue-dark-opacity);
+
+  img {
+    position: absolute;
+
+    top: var(--size-padding-vertical);
+    left: var(--size-padding-horizontal);
+
+    width: calc(100% - (var(--size-padding-horizontal) * 2));
+    height: calc(100% - (var(--size-padding-vertical) * 2));
+
+    object-fit: contain;
+    object-position: center;
   }
+}
+
+.close {
+  position: absolute;
+
+  top: var(--size-padding-vertical);
+  left: 50%;
+
+  transform: translate3d(-50%, 0, 0);
+
+  color: white;
+
+  z-index: 5;
 }

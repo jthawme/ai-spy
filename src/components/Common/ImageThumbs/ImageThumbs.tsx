@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 
-import classNames from "classnames";
+import { motion } from "framer-motion";
+
+import ImageThumbsModal from "./ImageThumbsModal";
 
 import * as styles from "./ImageThumbs.module.scss";
 
@@ -19,32 +21,47 @@ const ImageThumbs: React.FC<ImageThumbsProps> = ({
   highlighted,
   onSelect = () => {},
 }) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const onAnimationComplete = useCallback(
+    (idx: number) => {
+      if (typeof selected !== "undefined" && selected === idx) {
+        setShowModal(true);
+      }
+    },
+    [selected, setShowModal]
+  );
+
+  const requestCloseModal = useCallback(() => {
+    setShowModal(false);
+    onSelect(-1);
+  }, [setShowModal]);
+
   return (
-    <div
-      className={`${className} ${styles.list} ${!!highlighted &&
-        styles.hasHighlighted}`}
-    >
+    <div className={`${className} ${styles.list}`}>
       {images.map((img, index) => {
-        const cls = classNames(
-          styles.image,
-          {
-            [styles.selected]: selected === index,
-          },
-          {
-            [styles.highlighted]: highlighted === index,
-          }
-        );
         return (
-          <button
+          <motion.button
+            animate={{ y: selected === index ? "0%" : "80%" }}
             key={index}
-            className={cls}
+            className={styles.image}
             onClick={() => onSelect(index)}
-            disabled={!!highlighted && highlighted !== index}
+            onAnimationComplete={() => onAnimationComplete(index)}
           >
             <img src={img} />
-          </button>
+          </motion.button>
         );
       })}
+
+      <ImageThumbsModal
+        show={showModal}
+        img={
+          typeof selected !== "undefined" && selected >= 0
+            ? images[selected]
+            : undefined
+        }
+        onClose={requestCloseModal}
+      />
     </div>
   );
 };
